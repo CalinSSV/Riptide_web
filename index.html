@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lighthouse System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            font-family: Arial, sans-serif;
+        }
+        
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        canvas {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #0f1a2a;
+            color: white;
+            z-index: 100;
+        }
+        
+        #loading-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        #loading-progress {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        
+        #loading-bar {
+            width: 70%;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        #loading-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+        }
+    </style>
+    <!-- PixiJS and GSAP libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body>
+    <div id="canvas-container">
+        <div id="loading">
+            <div id="loading-title">Interactive Lighthouse System</div>
+            <div id="loading-bar">
+                <div id="loading-bar-fill"></div>
+            </div>
+            <div id="loading-progress">Loading assets...</div>
+        </div>
+    </div>
+    
+    <!-- Import and run the application -->
+    <script type="module">
+        // Update loading progress
+        function updateLoadingProgress(percent) {
+            document.getElementById('loading-bar-fill').style.width = `${percent}%`;
+            document.getElementById('loading-progress').textContent = `Loading: ${Math.floor(percent)}%`;
+        }
+        
+        // Simulate loading progress
+        let progress = 0;
+        const loadingInterval = setInterval(() => {
+            progress += 5;
+            updateLoadingProgress(progress);
+            
+            if (progress >= 100) {
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }
+        }, 100);
+        
+        // Import the main module
+        import './main.js';
+    </script>
+</body>
+</html>
